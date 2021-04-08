@@ -557,6 +557,10 @@ cfg_if! {
         #[link(name = "bsd")]
         #[link(name = "pthread")]
         extern "C" {}
+    } else if #[cfg(target_os = "francium")] {
+        #[link(name = "c")]
+        #[link(name = "gcc")]
+        extern "C" {}
     } else {
         #[link(name = "c")]
         #[link(name = "m")]
@@ -1878,6 +1882,9 @@ cfg_if! {
     } else if #[cfg(target_os = "nuttx")] {
         mod nuttx;
         pub use self::nuttx::*;
+    } else if #[cfg(target_os = "francium")] {
+        mod mlibc;
+        pub use self::mlibc::*;
     } else {
         // Unknown target_os
     }
