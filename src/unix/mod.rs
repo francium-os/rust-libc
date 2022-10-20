@@ -220,7 +220,7 @@ pub const DT_LNK: u8 = 10;
 pub const DT_SOCK: u8 = 12;
 
 cfg_if! {
-    if #[cfg(not(target_os = "redox"))] {
+    if #[cfg(not(any(target_os = "redox", target_os = "francium")))] {
         pub const FD_CLOEXEC: ::c_int = 0x1;
     }
 }
@@ -380,6 +380,13 @@ cfg_if! {
         #[link(name = "m")]
         extern {}
     } else if #[cfg(target_os = "redox")] {
+        #[cfg_attr(feature = "rustc-dep-of-std",
+                   link(name = "c", kind = "static", modifiers = "-bundle",
+                        cfg(target_feature = "crt-static")))]
+        #[cfg_attr(feature = "rustc-dep-of-std",
+                   link(name = "c", cfg(not(target_feature = "crt-static"))))]
+        extern {}
+    } else if #[cfg(target_os = "francium")] {
         #[cfg_attr(feature = "rustc-dep-of-std",
                    link(name = "c", kind = "static", modifiers = "-bundle",
                         cfg(target_feature = "crt-static")))]
@@ -1501,6 +1508,9 @@ cfg_if! {
     } else if #[cfg(target_os = "redox")] {
         mod redox;
         pub use self::redox::*;
+    } else if #[cfg(target_os = "francium")] {
+        mod francium;
+        pub use self::francium::*;
     } else {
         // Unknown target_os
     }
