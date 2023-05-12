@@ -753,6 +753,7 @@ extern "C" {
     pub fn setgroups(ngroups: ::c_int, ptr: *const ::gid_t) -> ::c_int;
     pub fn strerror_r(errnum: ::c_int, buf: *mut c_char, buflen: ::size_t) -> ::c_int;
     pub fn writev(fd: ::c_int, iov: *const ::iovec, count: ::c_int) -> ::ssize_t;
+    pub fn __errno_location() -> *mut ::c_int;    
 }
 
 extern "C" {
