@@ -1,11 +1,20 @@
-#[cfg(not(target_pointer_width = "64"))]
-compile_error!("Managarm target is not ported to this architecture");
+//#[cfg(not(target_pointer_width = "64"))]
+//compile_error!("Managarm target is not ported to this architecture");
 
 // Basic data types
-pub type c_char = i8;
-pub type c_long = i64;
-pub type c_ulong = u64;
-pub type wchar_t = ::c_int;
+cfg_if! {
+    if #[cfg(target_pointer_width = "32")] {
+        pub type c_char = i8;
+        pub type c_long = i32;
+        pub type c_ulong = u32;
+        pub type wchar_t = ::c_int;
+    } else {
+        pub type c_char = i8;
+        pub type c_long = i64;
+        pub type c_ulong = u64;
+        pub type wchar_t = ::c_int;
+    }
+}
 
 // options/posix/include/sys/resource.h
 pub type rlim_t = ::c_ulong;
