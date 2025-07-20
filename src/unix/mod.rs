@@ -31,9 +31,6 @@ cfg_if! {
     } else if #[cfg(target_os = "nto")] {
         pub type uid_t = i32;
         pub type gid_t = i32;
-    } else if #[cfg(target_os = "francium")] {
-        pub type uid_t = c_int;
-        pub type gid_t = c_int;
     } else {
         pub type uid_t = u32;
         pub type gid_t = u32;
