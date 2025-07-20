@@ -46,12 +46,6 @@ pub type time_t = c_long;
 // options/posix/include/bits/posix/suseconds_t.h
 pub type suseconds_t = c_long;
 
-// abis/mlibc/uid_t.h
-pub type uid_t = c_int;
-
-// abis/mlibc/gid_t.h
-pub type gid_t = c_int;
-
 // abis/mlibc/dev_t.h
 pub type dev_t = c_ulong;
 
@@ -717,8 +711,8 @@ s_no_extra_traits! {
 
 extern "C" {
     pub fn bind(socket: c_int, address: *const sockaddr, address_len: socklen_t) -> c_int;
-    pub fn clock_gettime(clk_id: clockid_t, tp: *mut timespec) -> c_int;
-    pub fn clock_settime(clk_id: clockid_t, tp: *const timespec) -> c_int;
+    pub fn clock_gettime(clk_id: clockid_t, tp: *mut crate::timespec) -> c_int;
+    pub fn clock_settime(clk_id: clockid_t, tp: *const crate::timespec) -> c_int;
     pub fn getpwuid_r(
         uid: uid_t,
         pwd: *mut passwd,
