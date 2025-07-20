@@ -702,7 +702,7 @@ s! {
         pub sin6_family: sa_family_t,
         pub sin6_port: in_port_t,
         pub sin6_flowinfo: u32,
-        pub sin6_addr: in6_addr,
+        pub sin6_addr: crate::in6_addr,
         pub sin6_scope_id: u32,
     }
 }
@@ -739,7 +739,7 @@ extern "C" {
     ) -> c_int;
     pub fn pthread_setname_np(t: pthread_t, name: *const c_char) -> c_int;
     pub fn pthread_sigmask(how: c_int, set: *const sigset_t, oldset: *mut sigset_t) -> c_int;
-    pub fn readv(fd: c_int, iov: *const iovec, count: c_int) -> ssize_t;
+    pub fn readv(fd: c_int, iov: *const crate::iovec, count: c_int) -> ssize_t;
     pub fn recvfrom(
         socket: c_int,
         buf: *mut c_void,
@@ -750,7 +750,7 @@ extern "C" {
     ) -> ssize_t;
     pub fn setgroups(ngroups: c_int, ptr: *const gid_t) -> c_int;
     pub fn strerror_r(errnum: c_int, buf: *mut c_char, buflen: size_t) -> c_int;
-    pub fn writev(fd: c_int, iov: *const iovec, count: c_int) -> ssize_t;
+    pub fn writev(fd: c_int, iov: *const crate::iovec, count: c_int) -> ssize_t;
     pub fn __errno_location() -> *mut c_int;    
 }
 
