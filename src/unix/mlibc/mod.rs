@@ -477,14 +477,14 @@ pub const POLLHUP: c_short = 8;
 pub const POLLIN: c_short = 1;
 pub const POLLNVAL: c_short = 0x40;
 pub const POLLOUT: c_short = 2;
-pub type nfds_t = ::size_t;
+pub type nfds_t = size_t;
 
 // options/glibc/include/sys/ioctl.h
 pub const FIOCLEX: c_ulong = 0x5451;
 pub const FIONBIO: c_ulong = 0x5421;
 
 // options/ansi/include/limits.h
-pub const PTHREAD_STACK_MIN: ::size_t = 16384;
+pub const PTHREAD_STACK_MIN: size_t = 16384;
 
 // options/posix/include/pwd.h
 s! {
@@ -531,8 +531,8 @@ pub const PTHREAD_RWLOCK_INITIALIZER: pthread_rwlock_t = pthread_rwlock_t {
 pub type pthread_key_t = usize; // TODO: This is a big hack
 s! {
     pub struct pthread_attr_t {
-        __mlibc_guardsize: ::size_t,
-        __mlibc_stacksize: ::size_t,
+        __mlibc_guardsize: size_t,
+        __mlibc_stacksize: size_t,
         __mlibc_stackaddr: *mut c_void,
         __mlibc_detachstate: c_int,
         __mlibc_scope: c_int,
@@ -542,7 +542,7 @@ s! {
         __mlibc_schedpolicy: c_int,
         // cpu_set_t *__mlibc_cpuset;
         __mlibc_cpuset: *mut c_void,
-        __mlibc_cpusetsize: ::size_t,
+        __mlibc_cpusetsize: size_t,
         __mlibc_sigmask: ::sigset_t,
         __mlibc_sigmaskset: c_int
     }
@@ -723,7 +723,7 @@ extern "C" {
         uid: ::uid_t,
         pwd: *mut passwd,
         buf: *mut c_char,
-        buflen: ::size_t,
+        buflen: size_t,
         result: *mut *mut passwd,
     ) -> c_int;
     pub fn ioctl(fd: c_int, request: c_ulong, ...) -> c_int;
@@ -739,22 +739,22 @@ extern "C" {
     ) -> c_int;
     pub fn pthread_setname_np(t: ::pthread_t, name: *const c_char) -> c_int;
     pub fn pthread_sigmask(how: c_int, set: *const sigset_t, oldset: *mut sigset_t) -> c_int;
-    pub fn readv(fd: c_int, iov: *const ::iovec, count: c_int) -> ::ssize_t;
+    pub fn readv(fd: c_int, iov: *const ::iovec, count: c_int) -> ssize_t;
     pub fn recvfrom(
         socket: c_int,
         buf: *mut c_void,
-        len: ::size_t,
+        len: size_t,
         flags: c_int,
         addr: *mut ::sockaddr,
         addrlen: *mut ::socklen_t,
-    ) -> ::ssize_t;
+    ) -> ssize_t;
     pub fn setgroups(ngroups: c_int, ptr: *const ::gid_t) -> c_int;
-    pub fn strerror_r(errnum: c_int, buf: *mut c_char, buflen: ::size_t) -> c_int;
-    pub fn writev(fd: c_int, iov: *const ::iovec, count: c_int) -> ::ssize_t;
+    pub fn strerror_r(errnum: c_int, buf: *mut c_char, buflen: size_t) -> c_int;
+    pub fn writev(fd: c_int, iov: *const ::iovec, count: c_int) -> ssize_t;
     pub fn __errno_location() -> *mut c_int;    
 }
 
 extern "C" {
-  pub fn getrandom(buf: *mut c_void, buflen: ::size_t, flags: c_uint) -> ::ssize_t;
+  pub fn getrandom(buf: *mut c_void, buflen: size_t, flags: c_uint) -> ssize_t;
 }
 
