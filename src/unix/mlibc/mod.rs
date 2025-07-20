@@ -104,8 +104,8 @@ s! {
         pub si_signo: c_int,
         pub si_code: c_int,
         pub si_errno: c_int,
-        pub si_pid: pid_t,
-        pub si_uid: uid_t,
+        pub si_pid: crate::pid_t,
+        pub si_uid: crate::uid_t,
         pub si_addr: *mut c_void,
         pub si_status: c_int,
         pub si_value: sigval,
@@ -154,13 +154,16 @@ pub type blkcnt_t = c_long;
 pub type nlink_t = c_int;
 
 // abis/mlibc/pid_t.h
-pub type pid_t = c_int;
+// defined, seems ok
+//pub type pid_t = c_int;
 
 // options/posix/include/bits/posix/in_addr_t.h
-pub type in_addr_t = u32;
+// defined in unix/mod.rs
+//pub type in_addr_t = u32;
 
 // options/posix/include/bits/posix/in_port_t.h
-pub type in_port_t = u16;
+// defined in unix/mod.rs
+//pub type in_port_t = u16;
 
 // options/ansi/include/stdlib.h
 pub const EXIT_FAILURE: c_int = 1;
@@ -420,8 +423,8 @@ s! {
         pub st_ino: ino_t,
         pub st_mode: mode_t,
         pub st_nlink: nlink_t,
-        pub st_uid: uid_t,
-        pub st_gid: gid_t,
+        pub st_uid: crate::uid_t,
+        pub st_gid: crate::gid_t,
         pub st_rdev: dev_t,
         pub st_size: off_t,
         pub st_atime: time_t,
@@ -485,8 +488,8 @@ s! {
     pub struct passwd {
         pub pw_name: *mut c_char,
         pub pw_passwd: *mut c_char,
-        pub pw_uid: uid_t,
-        pub pw_gid: gid_t,
+        pub pw_uid: crate::uid_t,
+        pub pw_gid: crate::gid_t,
         pub pw_gecos: *mut c_char,
         pub pw_dir: *mut c_char,
         pub pw_shell: *mut c_char,
@@ -675,7 +678,7 @@ pub const IP_MULTICAST_TTL: c_int = 33;
 pub const IP_TTL: c_int = 2;
 s! {
     pub struct in_addr {
-        pub s_addr: in_addr_t,
+        pub s_addr: crate::in_addr_t,
     }
     pub struct ip_mreq {
         pub imr_multiaddr: in_addr,
@@ -683,13 +686,13 @@ s! {
     }
     pub struct sockaddr_in {
         pub sin_family: sa_family_t,
-        pub sin_port: in_port_t,
+        pub sin_port: crate::in_port_t,
         pub sin_addr: in_addr,
         pub __padding: [u8; 8], // std relies on this being public
     }
     pub struct sockaddr_in6 {
         pub sin6_family: sa_family_t,
-        pub sin6_port: in_port_t,
+        pub sin6_port: crate::in_port_t,
         pub sin6_flowinfo: u32,
         pub sin6_addr: crate::in6_addr,
         pub sin6_scope_id: u32,
@@ -709,7 +712,7 @@ extern "C" {
     pub fn clock_gettime(clk_id: clockid_t, tp: *mut crate::timespec) -> c_int;
     pub fn clock_settime(clk_id: clockid_t, tp: *const crate::timespec) -> c_int;
     pub fn getpwuid_r(
-        uid: uid_t,
+        uid: crate::uid_t,
         pwd: *mut passwd,
         buf: *mut c_char,
         buflen: size_t,
@@ -737,7 +740,7 @@ extern "C" {
         addr: *mut sockaddr,
         addrlen: *mut socklen_t,
     ) -> ssize_t;
-    pub fn setgroups(ngroups: c_int, ptr: *const gid_t) -> c_int;
+    pub fn setgroups(ngroups: c_int, ptr: *const crate::gid_t) -> c_int;
     pub fn strerror_r(errnum: c_int, buf: *mut c_char, buflen: size_t) -> c_int;
     pub fn writev(fd: c_int, iov: *const crate::iovec, count: c_int) -> ssize_t;
     pub fn __errno_location() -> *mut c_int;    
