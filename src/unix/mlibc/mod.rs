@@ -653,13 +653,8 @@ s! {
 }
 
 // options/ansi/include/bits/ansi/timespec.h
-s! {
-    pub struct timespec {
-        pub tv_sec: time_t,
-        pub tv_nsec: c_long,
-    }
-}
-
+// defined in unix/mod.rs, seems to match
+	
 // options/posix/include/sys/un.h
 s! {
     pub struct sockaddr_un {
