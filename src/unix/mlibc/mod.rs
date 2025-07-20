@@ -117,10 +117,10 @@ s! {
         pub si_value: sigval,
     }
     pub struct sigaction {
-        pub sa_handler: ::Option<extern fn(c_int)>,
+        pub sa_handler: Option<extern fn(c_int)>,
         pub sa_mask: sigset_t,
         pub sa_flags: c_int,
-        pub sa_sigaction: ::Option<extern fn(c_int, *mut siginfo_t, *mut c_void)>,
+        pub sa_sigaction: Option<extern fn(c_int, *mut siginfo_t, *mut c_void)>,
     }
 }
 s_no_extra_traits! {
@@ -543,17 +543,17 @@ s! {
         // cpu_set_t *__mlibc_cpuset;
         __mlibc_cpuset: *mut c_void,
         __mlibc_cpusetsize: size_t,
-        __mlibc_sigmask: ::sigset_t,
+        __mlibc_sigmask: sigset_t,
         __mlibc_sigmaskset: c_int
     }
     pub struct pthread_cond_t {
         pub __mlibc_seq: c_uint,
         pub __mlibc_flags: c_uint,
-        pub __mlibc_clock: ::clockid_t
+        pub __mlibc_clock: clockid_t
     }
     pub struct pthread_condattr_t {
         pub __mlibc_pshared: c_int,
-        pub __mlibc_clock: ::clockid_t
+        pub __mlibc_clock: clockid_t
     }
     pub struct pthread_mutex_t {
         pub __mlibc_state: c_uint,
@@ -586,7 +586,7 @@ s! {
         pub ai_family: c_int,
         pub ai_socktype: c_int,
         pub ai_protocol: c_int,
-        pub ai_addrlen: ::socklen_t,
+        pub ai_addrlen: socklen_t,
         pub ai_addr: *mut sockaddr,
         pub ai_canonname: *mut c_char,
         pub ai_next: *mut addrinfo,
@@ -702,7 +702,7 @@ s! {
         pub sin6_family: sa_family_t,
         pub sin6_port: in_port_t,
         pub sin6_flowinfo: u32,
-        pub sin6_addr: ::in6_addr,
+        pub sin6_addr: in6_addr,
         pub sin6_scope_id: u32,
     }
 }
@@ -716,11 +716,11 @@ s_no_extra_traits! {
 }
 
 extern "C" {
-    pub fn bind(socket: c_int, address: *const ::sockaddr, address_len: ::socklen_t) -> c_int;
-    pub fn clock_gettime(clk_id: clockid_t, tp: *mut ::timespec) -> c_int;
-    pub fn clock_settime(clk_id: clockid_t, tp: *const ::timespec) -> c_int;
+    pub fn bind(socket: c_int, address: *const sockaddr, address_len: socklen_t) -> c_int;
+    pub fn clock_gettime(clk_id: clockid_t, tp: *mut timespec) -> c_int;
+    pub fn clock_settime(clk_id: clockid_t, tp: *const timespec) -> c_int;
     pub fn getpwuid_r(
-        uid: ::uid_t,
+        uid: uid_t,
         pwd: *mut passwd,
         buf: *mut c_char,
         buflen: size_t,
@@ -729,28 +729,28 @@ extern "C" {
     pub fn ioctl(fd: c_int, request: c_ulong, ...) -> c_int;
     pub fn pthread_condattr_setclock(
         attr: *mut pthread_condattr_t,
-        clock_id: ::clockid_t,
+        clock_id: clockid_t,
     ) -> c_int;
     pub fn pthread_create(
-        thread: *mut ::pthread_t,
-        attr: *const ::pthread_attr_t,
+        thread: *mut pthread_t,
+        attr: *const pthread_attr_t,
         f: extern "C" fn(*mut c_void) -> *mut c_void,
         value: *mut c_void,
     ) -> c_int;
-    pub fn pthread_setname_np(t: ::pthread_t, name: *const c_char) -> c_int;
+    pub fn pthread_setname_np(t: pthread_t, name: *const c_char) -> c_int;
     pub fn pthread_sigmask(how: c_int, set: *const sigset_t, oldset: *mut sigset_t) -> c_int;
-    pub fn readv(fd: c_int, iov: *const ::iovec, count: c_int) -> ssize_t;
+    pub fn readv(fd: c_int, iov: *const iovec, count: c_int) -> ssize_t;
     pub fn recvfrom(
         socket: c_int,
         buf: *mut c_void,
         len: size_t,
         flags: c_int,
-        addr: *mut ::sockaddr,
-        addrlen: *mut ::socklen_t,
+        addr: *mut sockaddr,
+        addrlen: *mut socklen_t,
     ) -> ssize_t;
-    pub fn setgroups(ngroups: c_int, ptr: *const ::gid_t) -> c_int;
+    pub fn setgroups(ngroups: c_int, ptr: *const gid_t) -> c_int;
     pub fn strerror_r(errnum: c_int, buf: *mut c_char, buflen: size_t) -> c_int;
-    pub fn writev(fd: c_int, iov: *const ::iovec, count: c_int) -> ssize_t;
+    pub fn writev(fd: c_int, iov: *const iovec, count: c_int) -> ssize_t;
     pub fn __errno_location() -> *mut c_int;    
 }
 
